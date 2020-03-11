@@ -49,9 +49,11 @@ def getEvalExpression(s: str):
     # not
     s = s.replace("!", "~").replace("not", "~").replace("¬", "~")
     # and
-    s = s.replace("&", "*").replace("and", "*").replace("∧", "*")
+    s = s.replace("&", "*").replace("and",
+                                    "*").replace("∧", "*").replace("^", "*")
     # or
-    s = s.replace("|", "+").replace("or", "+").replace("∨", "+")
+    s = s.replace("|", "+").replace("or",
+                                    "+").replace("∨", "+").replace("v", "+")
     # <->
     s = s.replace("<->", ">").replace("↔", ">")
     # ->

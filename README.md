@@ -5,8 +5,8 @@ Generate truth table according to logic expressions.
 ## Logic Expressions
 
 - `!`, `~`, `not`, `¬` are the same.
-- `&`, `*`, `and`, `∧` are the same.
-- `|`, `+`, `or`, `∨` are the same.
+- `&`, `*`, `and`, `∧`, `^` are the same.
+- `|`, `+`, `or`, `∨`, `v` are the same.
 - `<->`, `↔` are the same.
 - `->`  `→` are the same.
 
