@@ -72,7 +72,7 @@ def getEvalExpression(s: str):
 
 def getLatexExpression(s: str) -> str:
     return s.replace("~", r" \neg ").replace("*", r" \wedge ").replace(
-        "+", r" \vee ").replace("==", r" \leftrightarrow ").replace(">>", r" \rightarrow ").replace("!=", r" \oplus")
+        "+", r" \vee ").replace("==", r" \leftrightarrow ").replace(">>", r" \rightarrow ").replace("!=", r" \oplus ")
 
 
 def generateTruthTable(expression: str, reverse=False, markdown=False, file=sys.stdout) -> None:
