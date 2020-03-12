@@ -33,6 +33,10 @@ class Proposition:
     def __eq__(self, rhs):
         return Proposition((self.value and rhs.value) or (not self.value and not rhs.value))
 
+    # ^
+    def __ne__(self, rhs):
+        return Proposition(self.value != rhs.value)
+
 
 def getTableElement(s: str, markdown=False) -> str:
     if markdown:
@@ -51,7 +55,7 @@ def getEvalExpression(s: str):
         "¬", "~").replace(r"\neg", "~")
     # and
     s = s.replace("&", "*").replace(r"\wedge", "*").replace("and",
-                                                            "*").replace("∧", "*").replace("^", "*")
+                                                            "*").replace("∧", "*")
     # or
     s = s.replace("|", "+").replace(r"\vee", "+").replace("or",
                                                           "+").replace("∨", "+").replace("v", "+")
@@ -60,12 +64,15 @@ def getEvalExpression(s: str):
                                        "==").replace(r"\leftrightarrow", "==")
     # ->
     s = s.replace("->", ">>").replace("→", ">>").replace(r"\rightarrow", ">>")
+
+    # ^
+    s = s.replace("^", "!=").replace("⊕", "!=")
     return s
 
 
 def getLatexExpression(s: str) -> str:
     return s.replace("~", r" \neg ").replace("*", r" \wedge ").replace(
-        "+", r" \vee ").replace("==", r" \leftrightarrow ").replace(">>", r" \rightarrow ")
+        "+", r" \vee ").replace("==", r" \leftrightarrow ").replace(">>", r" \rightarrow ").replace("!=", r" \oplus")
 
 
 def generateTruthTable(expression: str, reverse=False, markdown=False, file=sys.stdout) -> None:
