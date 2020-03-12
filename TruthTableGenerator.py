@@ -14,7 +14,7 @@ class Proposition:
         self.value = value
 
     # ->
-    def __eq__(self, rhs):
+    def __rshift__(self, rhs):
         return Proposition(not (self.value and not rhs.value))
 
     # or
@@ -30,7 +30,7 @@ class Proposition:
         return Proposition(not self.value)
 
     # <->
-    def __gt__(self, rhs):
+    def __eq__(self, rhs):
         return Proposition((self.value and rhs.value) or (not self.value and not rhs.value))
 
 
@@ -47,23 +47,25 @@ def getPropositions(s: str) -> List[str]:
 
 def getEvalExpression(s: str):
     # not
-    s = s.replace("!", "~").replace("not", "~").replace("¬", "~")
+    s = s.replace("!", "~").replace("not", "~").replace(
+        "¬", "~").replace(r"\neg", "~")
     # and
-    s = s.replace("&", "*").replace("and",
-                                    "*").replace("∧", "*").replace("^", "*")
+    s = s.replace("&", "*").replace(r"\wedge", "*").replace("and",
+                                                            "*").replace("∧", "*").replace("^", "*")
     # or
-    s = s.replace("|", "+").replace("or",
-                                    "+").replace("∨", "+").replace("v", "+")
+    s = s.replace("|", "+").replace(r"\vee", "+").replace("or",
+                                                          "+").replace("∨", "+").replace("v", "+")
     # <->
-    s = s.replace("<->", ">").replace("↔", ">")
+    s = s.replace("<->", "==").replace("↔",
+                                       "==").replace(r"\leftrightarrow", "==")
     # ->
-    s = s.replace("->", "==").replace("→", "==")
+    s = s.replace("->", ">>").replace("→", ">>").replace(r"\rightarrow", ">>")
     return s
 
 
 def getLatexExpression(s: str) -> str:
     return s.replace("~", r" \neg ").replace("*", r" \wedge ").replace(
-        "+", r" \vee ").replace(">", r" \leftrightarrow ").replace("==", r" \rightarrow ")
+        "+", r" \vee ").replace("==", r" \leftrightarrow ").replace(">>", r" \rightarrow ")
 
 
 def generateTruthTable(expression: str, reverse=False, markdown=False, file=sys.stdout) -> None:
