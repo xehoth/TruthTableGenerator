@@ -85,6 +85,10 @@ def generateTruthTable(expression: str, reverse=False, markdown=False, file=sys.
     # eval string
     s = getEvalExpression(expression)
 
+    # tautology & conflict
+    tautology = True
+    conflict = False
+
     if markdown:
         expression = getLatexExpression(s)
 
@@ -114,9 +118,14 @@ def generateTruthTable(expression: str, reverse=False, markdown=False, file=sys.
             buf[i].value = (state >> (n - i - 1)) & 1 == 1
             print(getTableElement(
                 "FT"[buf[i].value], markdown=markdown), end='', file=file)
-        print(getTableElement("FT"[eval("(" + s + ").value",
-                                        {v: buf[i] for i, v in enumerate(props + ['T', 'F'])})], markdown=markdown), file=file)
-
+        res = eval("(" + s + ").value",{v: buf[i] for i, v in enumerate(props + ['T', 'F'])})
+        print(getTableElement("FT"[res], markdown=markdown), file=file)
+        tautology = tautology and res
+        conflict = conflict or res
+    if tautology:
+        print("\nIt's tautological.\n", file=file)
+    if not conflict:
+        print("\nIt's conflict.\n", file=file)
 
 def main(inputFile=sys.stdin, outputFile=sys.stdout, reverse=False, markdown=False) -> None:
     for s in inputFile:
