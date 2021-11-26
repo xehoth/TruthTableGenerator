@@ -38,10 +38,11 @@ class Proposition:
         return Proposition(self.value != rhs.value)
 
 
-def getTableElement(s: str, markdown=False) -> str:
+def getTableElement(s: str, markdown=False, l = -1) -> str:
+    l = (len(s) if (l == -1 or markdown == True) else l)
     if markdown:
         s = "$" + s + "$"
-    s = s.center(len(s) + 2)
+    s = s.center(l + 2)
     return s + "|" if markdown else s
 
 
@@ -117,9 +118,9 @@ def generateTruthTable(expression: str, reverse=False, markdown=False, file=sys.
         for i in range(n):
             buf[i].value = (state >> (n - i - 1)) & 1 == 1
             print(getTableElement(
-                "FT"[buf[i].value], markdown=markdown), end='', file=file)
+                "FT"[buf[i].value], markdown=markdown, l = len(props[i])), end='', file=file)
         res = eval("(" + s + ").value",{v: buf[i] for i, v in enumerate(props + ['T', 'F'])})
-        print(getTableElement("FT"[res], markdown=markdown), file=file)
+        print(getTableElement("FT"[res], markdown=markdown, l = len(expression)), file=file)
         tautology = tautology and res
         conflict = conflict or res
     if tautology:
