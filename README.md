@@ -13,7 +13,7 @@ Generate truth table according to logic expressions.
 
 ## Usage for python3 environment
 
-Python3 is required, See help using `python TruthTableGenerator.py` or `python3 TruthTableGenerator.py`
+Python3 is required, see help using `python TruthTableGenerator.py` or `python3 TruthTableGenerator.py`
 
 ``` bash
 usage: [-h | --help] [-i | --input <file path>]
